@@ -1,5 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import { lifecycle } from 'recompose';
+
 import { Screen, Logo, Line, Tagline } from './styles';
 
 const SplashScreen = () => (
@@ -10,8 +13,16 @@ const SplashScreen = () => (
   </Screen>
 );
 
-SplashScreen.navigationOptions = {
+const SplashScreenWithLifeCycle = lifecycle({
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.navigation.navigate('Chat');
+    }, 1000);
+  },
+})(SplashScreen)
+
+SplashScreenWithLifeCycle.navigationOptions = {
   header: null,
 };
 
-export default SplashScreen;
+export default SplashScreenWithLifeCycle;

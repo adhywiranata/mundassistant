@@ -6,6 +6,6 @@ import SplashScreen from './screens/Splash';
 import ChatScreen from './screens/Chat';
 
 export default StackNavigator({
-  Chat: { screen: ChatScreen },
   Splash: { screen: SplashScreen },
+  Chat: { screen: ChatScreen },
 });
