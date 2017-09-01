@@ -27,10 +27,16 @@ const Tagline = glamorous.text({
   fontSize: 16,
 });
 
-export default () => (
+const SplashScreen = () => (
   <Screen>
     <Logo>MundAssistant</Logo>
     <Line />
     <Tagline>Mundane things? Consider it done.</Tagline>
   </Screen>
 );
+
+SplashScreen.navigationOptions = {
+  header: null,
+};
+
+export default SplashScreen;
