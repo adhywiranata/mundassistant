@@ -2,6 +2,8 @@ export const colors = {
   red: '#E74C3C',
   white: '#FFFFFF',
   black: '#000000',
+  gray: '#D2D7D3',
+  darkGray: '#6C7A89',
 };
 
 export const flexPos = {
