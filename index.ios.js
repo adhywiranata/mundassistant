@@ -12,10 +12,12 @@ import {
   View
 } from 'react-native';
 
+import App from './src/App';
+
 export default class mundassistant extends Component {
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <App />
       </View>
     );
