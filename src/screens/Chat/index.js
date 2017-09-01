@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+
 import { Container, Group, TimeStamp, Avatar, Bubble, Message } from './styles';
+import { colors, flexPos, fontWeightScale } from '../../config/themeConstants';
 
 const ChatScreen = () => (
   <Container>
@@ -28,7 +30,14 @@ const ChatScreen = () => (
 );
 
 ChatScreen.navigationOptions = {
-  title: 'Chat',
+  title: 'CHAT',
+  headerStyle: {
+    backgroundColor: colors.red,
+  },
+  headerTitleStyle: {
+    color: colors.white,
+    alignSelf: 'center',
+  },
 };
 
 export default ChatScreen;
