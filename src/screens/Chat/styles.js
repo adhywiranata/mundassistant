@@ -7,6 +7,16 @@ export const Container = glamorous.view({
   flex: 1,
 });
 
+export const ChatList = glamorous.scrollView({
+
+});
+
+export const ActionBar = glamorous.view({
+  backgroundColor: colors.darkGray,
+  height: 50,
+  width: '100%',
+});
+
 export const Group = glamorous.view({
   width: '60%',
   padding: 3,
