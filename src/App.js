@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import SplashScreen from './SplashScreen';
+import SplashScreen from './screens/SplashScreen';
 
 export default StackNavigator({
   Home: { screen: SplashScreen },
