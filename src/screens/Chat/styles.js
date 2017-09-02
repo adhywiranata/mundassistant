@@ -18,13 +18,13 @@ export const ActionBar = glamorous.view({
 });
 
 export const Group = glamorous.view({
-  width: '60%',
   padding: 3,
   alignItems: 'center',
   justifyContent: 'space-between',
   flexDirection: 'row',
 }, ({ bot }) => ({
   alignSelf: bot ? 'flex-start' : 'flex-end',
+  width: bot ? '80%': '70%',
 }));
 
 export const Avatar = glamorous.view({
@@ -48,10 +48,13 @@ export const Bubble = glamorous.view({
 }, ({ bot }) => ({
   backgroundColor: bot ? colors.red : colors.darkGray,
   alignItems: bot ? 'flex-start' : 'flex-end',
+  maxWidth: bot ? '85%' : '100%',
 }));
 
 export const Message = glamorous.text({
   color: colors.white,
   marginTop: 5,
   marginBottom: 5,
-});
+}, ({ bot }) => ({
+  textAlign: bot ? 'left' : 'right',
+}));

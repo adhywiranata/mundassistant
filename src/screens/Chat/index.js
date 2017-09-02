@@ -12,7 +12,7 @@ const ChatScreen = ({ chats }) => (
         <Group key={chat.id} bot={chat.bot}>
           {chat.bot && <Avatar />}
           <Bubble bot={chat.bot}>
-            <Message>{chat.message}</Message>
+            <Message bot={chat.bot}>{chat.message}</Message>
             <TimeStamp>18:30</TimeStamp>
           </Bubble>
         </Group>
