@@ -1,15 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-import { Container, ChatList, ActionBar, Group, TimeStamp, Avatar, Bubble, Message } from './styles';
-import { colors, flexPos, fontWeightScale } from '../../config/themeConstants';
+import { Container } from './styles';
+import { colors } from '../../config/themeConstants';
 import PrimaryButton from '../../components/core/buttons/Primary';
 
 const HomeScreen = ({ navigation }) => (
-  <Container>
-    <Text>Awesome</Text>
+  <Container style={{ justifyContent: 'center' }}>
     <PrimaryButton label={'Chat Me'} handlePress={() => navigation.navigate('Chat')} />
-    <PrimaryButton label={'Manage Commands'} />
+    <PrimaryButton label={'Manage Commands'} handlePress={() => navigation.navigate('ManageCommands')} />
   </Container>
 );
 
