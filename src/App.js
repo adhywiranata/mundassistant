@@ -2,7 +2,10 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
+import Realm from 'realm';
 
+// import realm from './realm';
+import { commandSchema } from './realmSchemas';
 import store from './store/configureStore';
 
 import SplashScreen from './screens/Splash';
@@ -15,8 +18,44 @@ const MainNavigator = StackNavigator({
   Splash: { screen: SplashScreen },
 });
 
-export default () => (
-  <Provider store={store}>
-    <MainNavigator />
-  </Provider>
-);
+const parseRealmObject = realmObj => JSON.parse(JSON.stringify(realmObj));
+
+export default class extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      realm: null
+    }
+  }
+  componentDidMount() {
+    // Initialize a Realm models
+    Realm.open({schema: [commandSchema]})
+      .then(realm => {
+        // try {
+        //   realm.write(() => {
+        //     realm.create('Command', { name: 'Gojek', template: 'mantap' });
+        //   });
+        // } catch(e) {
+        //
+        // }
+        this.setState({ realm });
+        // console.log(realm.objects('Command'));
+        // ... use the realm instance to read and modify data
+      });
+  }
+
+  render() {
+    // console.log(this.state.realm);
+    if(this.state.realm) {
+      const commands = this.state.realm.objects('Command').filtered('template = "test"');
+      console.log(commands);
+      console.log(parseRealmObject(commands[0]));
+      console.log(parseRealmObject(commands));
+    }
+    return (
+      <Provider store={store}>
+        <MainNavigator />
+      </Provider>
+    );
+  }
+}
