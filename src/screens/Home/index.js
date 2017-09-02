@@ -5,10 +5,10 @@ import { Container, ChatList, ActionBar, Group, TimeStamp, Avatar, Bubble, Messa
 import { colors, flexPos, fontWeightScale } from '../../config/themeConstants';
 import PrimaryButton from '../../components/core/buttons/Primary';
 
-const HomeScreen = () => (
+const HomeScreen = ({ navigation }) => (
   <Container>
     <Text>Awesome</Text>
-    <PrimaryButton label={'Chat Me'} handlePress={() => {}} />
+    <PrimaryButton label={'Chat Me'} handlePress={() => navigation.navigate('Chat')} />
     <PrimaryButton label={'Manage Commands'} />
   </Container>
 );
