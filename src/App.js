@@ -11,8 +11,8 @@ import HomeScreen from './screens/Home';
 import ChatScreen from './screens/Chat';
 
 const MainNavigator = StackNavigator({
-  Home: { screen: HomeScreen },
   Chat: { screen: ChatScreen },
+  Home: { screen: HomeScreen },
   Splash: { screen: SplashScreen },
 });
 

@@ -5,7 +5,20 @@ import { compose, lifecycle } from 'recompose';
 import Realm from 'realm';
 
 // styling and components
-import { Container, ChatList, ActionBar, Group, TimeStamp, Avatar, Bubble, Message } from './styles';
+import {
+  Container,
+  ChatList,
+  ActionBar,
+  InputWrapper,
+  MessageInput,
+  SendMessageButton,
+  ButtonLabel,
+  Group,
+  TimeStamp,
+  Avatar,
+  Bubble,
+  Message,
+} from './styles';
 import { colors } from '../../config/themeConstants';
 
 // data
@@ -34,7 +47,14 @@ const ChatScreen = ({ chats, isFetching, fetchChats }) => (
         </Group>
       ))}
     </ChatList>
-    <ActionBar />
+    <ActionBar>
+      <InputWrapper>
+        <MessageInput autoFocus underlineColorAndroid={'transparent'} selectionColor={'#666666'} />
+      </InputWrapper>
+      <SendMessageButton>
+        <ButtonLabel>Send</ButtonLabel>
+      </SendMessageButton>
+    </ActionBar>
   </Container>
 );
 

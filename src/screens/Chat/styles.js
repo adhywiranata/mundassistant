@@ -1,20 +1,14 @@
-import glamorous, {ThemeProvider} from 'glamorous-native';
+import glamorous, { ThemeProvider } from 'glamorous-native';
 
 import { colors, flexPos, fontWeightScale } from '../../config/themeConstants';
 
 export const Container = glamorous.view({
-  backgroundColor: colors.white,
+  backgroundColor: colors.gray,
   flex: 1,
 });
 
 export const ChatList = glamorous.scrollView({
 
-});
-
-export const ActionBar = glamorous.view({
-  backgroundColor: colors.darkGray,
-  height: 50,
-  width: '100%',
 });
 
 export const Group = glamorous.view({
@@ -31,7 +25,7 @@ export const Avatar = glamorous.view({
   width: 30,
   height: 30,
   borderRadius: 15,
-  backgroundColor: colors.gray,
+  backgroundColor: colors.darkGray,
   elevation: 1,
 });
 
@@ -58,3 +52,34 @@ export const Message = glamorous.text({
 }, ({ bot }) => ({
   textAlign: bot ? 'left' : 'right',
 }));
+
+export const ActionBar = glamorous.view({
+  backgroundColor: colors.white,
+  height: 45,
+  width: '100%',
+  flexDirection: 'row',
+});
+
+export const InputWrapper = glamorous.view({
+  flex: 1,
+  backgroundColor: colors.white,
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const MessageInput = glamorous.textInput({
+  width: '90%',
+  fontSize: 16,
+});
+
+export const SendMessageButton = glamorous.touchableOpacity({
+  backgroundColor: colors.red,
+  height: '100%',
+  width: 45,
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const ButtonLabel = glamorous.text({
+  color: colors.white,
+});
