@@ -51,11 +51,11 @@ class ChatBox extends React.Component {
   }
 
   handleSubmit() {
+    const date = new Date();
     const message = {
-      id: 3,
       bot: false,
       message: this.state.chatMessage,
-      createdAt: String(new Date()),
+      createdAt: date.toISOString(),
     };
 
     this.setState({ chatMessage: '' });
@@ -98,7 +98,7 @@ const ChatScreen = ({ chats, isFetching, fetchChats, addChatMessage }) => (
           {chat.bot && <Avatar />}
           <Bubble bot={chat.bot}>
             <Message bot={chat.bot}>{chat.message}</Message>
-            <TimeStamp>{moment(String(chat.createdAt), 'YYYY-MM-DDTHH:mm:ssZZ').format('hh:ss')}</TimeStamp>
+            <TimeStamp>{moment(chat.createdAt).format('hh:mm')}</TimeStamp>
           </Bubble>
         </Group>
       ))}
@@ -117,6 +117,7 @@ const mapDispatchToProps = dispatch => ({
   fetchChatsLoading: () => dispatch(fetchChatsLoadingAction()),
   fetchChatsSuccess: data => dispatch(fetchChatsSuccessAction(data)),
   fetchChatsFailure: error => dispatch(fetchChatsFailureAction(error)),
+  addChatMessage: message => dispatch(addChatMessageAction(message)),
 });
 
 const EnhancedChatScreen = compose(
@@ -129,15 +130,25 @@ const EnhancedChatScreen = compose(
       this.props.fetchChatsLoading();
       Realm.open({ schema: [chatSchema] })
         .then((realm) => {
-          // realm.write(() => {
-          //   realm.create('Chat', {
-          // id: 1, bot: true, message: 'hello can I help you?', createdAt: new Date() });
-          //   realm.create('Chat', {
-          // id: 2, bot: false, message: 'can i set a new command?', createdAt: new Date() });
-          // });
+          realm.write(() => {
+            // realm.delete(realm.objects('Chat'));
+            // realm.create('Chat', {
+            // id: 1, bot: true, message: 'hello can I help you?', createdAt: new Date() });
+            //   realm.create('Chat', {
+            // id: 2, bot: false, message: 'can i set a new command?', createdAt: new Date() });
+          });
           const chats = parseRealmObject(realm.objects('Chat'));
           const chatsArr = Object.keys(chats).map(each => chats[each]);
           this.props.fetchChatsSuccess(chatsArr);
+
+          const date = new Date();
+          const message = {
+            bot: true,
+            message: 'Hello! How can I help you to be more productive? ',
+            createdAt: date.toISOString(),
+          };
+
+          this.props.addChatMessage(message);
         });
     },
   }),

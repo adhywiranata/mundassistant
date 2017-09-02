@@ -8,22 +8,7 @@ import {
 } from '../actions/constants';
 
 const initialState = Immutable({
-  data: [
-    {
-      id: 1,
-      bot: true,
-      message: 'Hello! Anything i can help with? bla bla bla jibberish jibber jabber',
-      read: true,
-      createdAt: new Date(),
-    },
-    {
-      id: 2,
-      bot: false,
-      message: 'Can you help me with this.. ? bla bla bla jibberish jibber jabber',
-      read: true,
-      createdAt: new Date(),
-    },
-  ],
+  data: [],
   isFetching: false,
   isError: false,
   error: null,
@@ -41,7 +26,8 @@ const fetchChatFailure = (state, error) => {
 };
 
 const addChatMessage = (state, message) => {
-  const newMessage = { ...message, id: state.data[state.data.length - 1].id + 1 };
+  const id = state.data.length < 1 ? 1 : state.data[state.data.length - 1].id + 1;
+  const newMessage = { ...message, id };
   return Immutable.set(state, 'data', state.data.concat(newMessage));
 };
 
