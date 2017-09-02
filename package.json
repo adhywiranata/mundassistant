@@ -15,6 +15,7 @@
     "realm": "^1.11.1",
     "recompose": "^0.25.0",
     "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
     "seamless-immutable": "^7.1.2"
   },
   "devDependencies": {
