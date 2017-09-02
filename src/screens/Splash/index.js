@@ -16,7 +16,7 @@ const SplashScreen = () => (
 const SplashScreenWithLifeCycle = lifecycle({
   componentDidMount() {
     setTimeout(() => {
-      this.props.navigation.navigate('Chat');
+      this.props.navigation.navigate('Home');
     }, 1000);
   },
 })(SplashScreen)
