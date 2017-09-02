@@ -43,7 +43,7 @@ const ChatScreen = ({ chats, isFetching, fetchChats }) => (
           {chat.bot && <Avatar />}
           <Bubble bot={chat.bot}>
             <Message bot={chat.bot}>{chat.message}</Message>
-            <TimeStamp>{moment(String(chat.createdAt)).format('hh:ss')}</TimeStamp>
+            <TimeStamp>{moment(String(chat.createdAt), 'YYYY-MM-DDTHH:mm:ssZZ').format('hh:ss')}</TimeStamp>
           </Bubble>
         </Group>
       ))}
