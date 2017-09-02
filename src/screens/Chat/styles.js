@@ -36,7 +36,10 @@ export const TimeStamp = glamorous.text({
 
 export const Bubble = glamorous.view({
   margin: 5,
-  padding: 10,
+  marginBottom: 0,
+  padding: 20,
+  paddingTop: 10,
+  paddingBottom: 10,
   borderRadius: 5,
   elevation: 1,
 }, ({ bot }) => ({
