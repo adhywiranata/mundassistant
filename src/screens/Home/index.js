@@ -3,10 +3,13 @@ import { View, Text } from 'react-native';
 
 import { Container, ChatList, ActionBar, Group, TimeStamp, Avatar, Bubble, Message } from './styles';
 import { colors, flexPos, fontWeightScale } from '../../config/themeConstants';
+import PrimaryButton from '../../components/core/buttons/Primary';
 
 const HomeScreen = () => (
   <Container>
     <Text>Awesome</Text>
+    <PrimaryButton label={'Chat Me'} handlePress={() => {}} />
+    <PrimaryButton label={'Manage Commands'} />
   </Container>
 );
 
