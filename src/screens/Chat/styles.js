@@ -82,4 +82,5 @@ export const SendMessageButton = glamorous.touchableOpacity({
 
 export const ButtonLabel = glamorous.text({
   color: colors.white,
+  fontWeight: 'bold',
 });

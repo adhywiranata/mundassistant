@@ -3,6 +3,7 @@ import { ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import Realm from 'realm';
+import moment from 'moment';
 
 // styling and components
 import {
@@ -42,17 +43,21 @@ const ChatScreen = ({ chats, isFetching, fetchChats }) => (
           {chat.bot && <Avatar />}
           <Bubble bot={chat.bot}>
             <Message bot={chat.bot}>{chat.message}</Message>
-            <TimeStamp>18:30</TimeStamp>
+            <TimeStamp>{moment(String(chat.createdAt)).format('hh:ss')}</TimeStamp>
           </Bubble>
         </Group>
       ))}
     </ChatList>
     <ActionBar>
       <InputWrapper>
-        <MessageInput autoFocus underlineColorAndroid={'transparent'} selectionColor={'#666666'} />
+        <MessageInput
+          autoFocus
+          underlineColorAndroid={'transparent'}
+          selectionColor={'#666666'}
+        />
       </InputWrapper>
       <SendMessageButton>
-        <ButtonLabel>Send</ButtonLabel>
+        <ButtonLabel>SEND</ButtonLabel>
       </SendMessageButton>
     </ActionBar>
   </Container>
