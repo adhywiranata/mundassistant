@@ -28,13 +28,68 @@ import {
   fetchChatsLoading as fetchChatsLoadingAction,
   fetchChatsSuccess as fetchChatsSuccessAction,
   fetchChatsFailure as fetchChatsFailureAction,
+  addChatMessage as addChatMessageAction,
 } from '../../actions/chatActionCreator';
 import { chatSchema } from '../../realmSchemas';
 
 // mini "hacky" helper
 const parseRealmObject = realmObj => JSON.parse(JSON.stringify(realmObj));
 
-const ChatScreen = ({ chats, isFetching, fetchChats }) => (
+class ChatBox extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      chatMessage: '',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(chatMessage) {
+    this.setState({ chatMessage });
+  }
+
+  handleSubmit() {
+    const message = {
+      id: 3,
+      bot: false,
+      message: this.state.chatMessage,
+      createdAt: String(new Date()),
+    };
+
+    this.setState({ chatMessage: '' });
+    this.props.addChatMessage(message);
+  }
+
+  render() {
+    return (
+      <ActionBar>
+        <InputWrapper>
+          <MessageInput
+            autoFocus
+            underlineColorAndroid={'transparent'}
+            selectionColor={'#666666'}
+            onChangeText={this.handleChange}
+            onSubmitEditing={this.handleSubmit}
+            value={this.state.chatMessage}
+          />
+        </InputWrapper>
+        <SendMessageButton onPress={this.handleSubmit}>
+          <ButtonLabel>SEND</ButtonLabel>
+        </SendMessageButton>
+      </ActionBar>
+    );
+  }
+}
+const WrappedChatBox = connect(
+  null,
+  dispatch => ({
+    addChatMessage: message => dispatch(addChatMessageAction(message)),
+  }),
+)(ChatBox);
+
+const ChatScreen = ({ chats, isFetching, fetchChats, addChatMessage }) => (
   <Container>
     <ChatList>
       {isFetching && <ActivityIndicator />}
@@ -48,18 +103,7 @@ const ChatScreen = ({ chats, isFetching, fetchChats }) => (
         </Group>
       ))}
     </ChatList>
-    <ActionBar>
-      <InputWrapper>
-        <MessageInput
-          autoFocus
-          underlineColorAndroid={'transparent'}
-          selectionColor={'#666666'}
-        />
-      </InputWrapper>
-      <SendMessageButton>
-        <ButtonLabel>SEND</ButtonLabel>
-      </SendMessageButton>
-    </ActionBar>
+    <WrappedChatBox />
   </Container>
 );
 

@@ -4,6 +4,7 @@ import {
   FETCH_CHATS_LOADING,
   FETCH_CHATS_SUCCESS,
   FETCH_CHATS_FAILURE,
+  ADD_CHAT_MESSAGE,
 } from '../actions/constants';
 
 const initialState = Immutable({
@@ -39,11 +40,17 @@ const fetchChatFailure = (state, error) => {
   return Immutable.set(modifiedState, 'error', error);
 };
 
+const addChatMessage = (state, message) => {
+  const newMessage = { ...message, id: state.data[state.data.length - 1].id + 1 };
+  return Immutable.set(state, 'data', state.data.concat(newMessage));
+};
+
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case FETCH_CHATS_LOADING: return Immutable.set(state, 'isFetching', true);
     case FETCH_CHATS_SUCCESS: return fetchChatSuccess(state, payload);
     case FETCH_CHATS_FAILURE: return fetchChatFailure(state, payload);
+    case ADD_CHAT_MESSAGE: return addChatMessage(state, payload);
     default: return state;
   }
 };
