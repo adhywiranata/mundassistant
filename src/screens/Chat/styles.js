@@ -20,11 +20,11 @@ export const ActionBar = glamorous.view({
 export const Group = glamorous.view({
   padding: 3,
   alignItems: 'center',
-  justifyContent: 'space-between',
   flexDirection: 'row',
 }, ({ bot }) => ({
   alignSelf: bot ? 'flex-start' : 'flex-end',
-  width: bot ? '80%': '70%',
+  justifyContent: bot ? 'flex-start' : 'flex-end',
+  width: bot ? '80%' : '70%',
 }));
 
 export const Avatar = glamorous.view({
