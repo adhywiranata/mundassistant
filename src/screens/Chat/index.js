@@ -1,60 +1,22 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
 
 import { Container, ChatList, ActionBar, Group, TimeStamp, Avatar, Bubble, Message } from './styles';
 import { colors, flexPos, fontWeightScale } from '../../config/themeConstants';
 
-const ChatScreen = () => (
+const ChatScreen = ({ chats }) => (
   <Container>
     <ChatList>
-      <Group bot>
-        <Avatar />
-        <Bubble bot>
-          <Message>Hello! Anything i can help with?</Message>
-          <TimeStamp>18:30</TimeStamp>
-        </Bubble>
-      </Group>
-      <Group bot>
-        <Avatar />
-        <Bubble bot>
-          <Message>Hello! Anything i can help with?</Message>
-          <TimeStamp>18:30</TimeStamp>
-        </Bubble>
-      </Group>
-      <Group>
-        <Bubble>
-          <Message>I need to register a gojek auto message!</Message>
-          <TimeStamp>18:30</TimeStamp>
-        </Bubble>
-      </Group>
-      <Group bot>
-        <Avatar />
-        <Bubble bot>
-          <Message>Hello! Anything i can help with?</Message>
-          <TimeStamp>18:30</TimeStamp>
-        </Bubble>
-      </Group>
-      <Group bot>
-        <Avatar />
-        <Bubble bot>
-          <Message>Hello! Anything i can help with?</Message>
-          <TimeStamp>18:30</TimeStamp>
-        </Bubble>
-      </Group>
-      <Group bot>
-        <Avatar />
-        <Bubble bot>
-          <Message>Hello! Anything i can help with?</Message>
-          <TimeStamp>18:30</TimeStamp>
-        </Bubble>
-      </Group>
-      <Group bot>
-        <Avatar />
-        <Bubble bot>
-          <Message>Hello! Anything i can help with?</Message>
-          <TimeStamp>18:30</TimeStamp>
-        </Bubble>
-      </Group>
+      {chats.map((chat) => (
+        <Group key={chat.id} bot={chat.bot}>
+          {chat.bot && <Avatar />}
+          <Bubble bot={chat.bot}>
+            <Message>{chat.message}</Message>
+            <TimeStamp>18:30</TimeStamp>
+          </Bubble>
+        </Group>
+      ))}
     </ChatList>
     <ActionBar />
   </Container>
@@ -71,4 +33,11 @@ ChatScreen.navigationOptions = {
   },
 };
 
-export default ChatScreen;
+const mapStateToProps = state => ({
+  chats: state.chat.data,
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(ChatScreen);
