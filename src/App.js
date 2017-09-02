@@ -20,16 +20,16 @@ const MainNavigator = StackNavigator({
 
 export default class extends React.Component {
   componentDidMount() {
-    Realm.open({ schema: [commandSchema] })
-      .then((realm) => {
-        try {
-          realm.write(() => {
-            // realm.create('Command', { name: 'Gojek', template: 'mantap' });
-          });
-        } catch (e) {
-          console.error(e);
-        }
-      });
+    // Realm.open({ schema: [commandSchema] })
+    //   .then((realm) => {
+    //     try {
+    //       realm.write(() => {
+    //         // realm.create('Command', { name: 'Gojek', template: 'mantap' });
+    //       });
+    //     } catch (e) {
+    //       console.error(e);
+    //     }
+    //   });
   }
 
   render() {
