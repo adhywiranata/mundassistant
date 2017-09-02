@@ -1,4 +1,13 @@
-import { FETCH_CHATS_LOADING, FETCH_CHATS_SUCCESS, FETCH_CHATS_FAILURE } from './constants';
+import {
+  FETCH_CHATS,
+  FETCH_CHATS_LOADING,
+  FETCH_CHATS_SUCCESS,
+  FETCH_CHATS_FAILURE,
+} from './constants';
+
+export const fetchChats = () => ({
+  type: FETCH_CHATS,
+});
 
 export const fetchChatsLoading = () => ({
   type: FETCH_CHATS_LOADING,
