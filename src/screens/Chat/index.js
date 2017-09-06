@@ -5,15 +5,12 @@ import { compose, lifecycle } from 'recompose';
 import Realm from 'realm';
 import moment from 'moment';
 
+import ChatBox from './ChatBox';
+
 // styling and components
 import {
   Container,
   ChatList,
-  ActionBar,
-  InputWrapper,
-  MessageInput,
-  SendMessageButton,
-  ButtonLabel,
   Group,
   TimeStamp,
   Avatar,
@@ -36,91 +33,42 @@ import { chatSchema } from '../../realmSchemas';
 // mini "hacky" helper
 const parseRealmObject = realmObj => JSON.parse(JSON.stringify(realmObj));
 
-class ChatBox extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      chatMessage: '',
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(chatMessage) {
-    this.setState({ chatMessage });
-  }
-
-  handleSubmit() {
-    const date = new Date();
-    const message = {
-      bot: false,
-      message: this.state.chatMessage,
-      createdAt: date.toISOString(),
-    };
-
-    this.setState({ chatMessage: '' });
-    this.props.addChatMessage(message);
-  }
-
+class ChatScreen extends React.Component {
   render() {
+    const { chats, isFetching, fetchChats, addChatMessage } = this.props;
     return (
-      <ActionBar>
-        <InputWrapper>
-          <MessageInput
-            autoFocus
-            underlineColorAndroid={'transparent'}
-            selectionColor={'#666666'}
-            onChangeText={this.handleChange}
-            onSubmitEditing={this.handleSubmit}
-            value={this.state.chatMessage}
-          />
-        </InputWrapper>
-        <SendMessageButton onPress={this.handleSubmit}>
-          <ButtonLabel>SEND</ButtonLabel>
-        </SendMessageButton>
-      </ActionBar>
+      <Container>
+        {isFetching && <ActivityIndicator />}
+        <ChatList
+          data={chats}
+          ref={(chatlist) => { this.chatList = chatlist; }}
+          keyExtractor={chat => chat.id}
+          renderItem={({ item }) => {
+            const chat = item;
+            return (
+              <Group bot={chat.bot}>
+                {chat.bot && <Avatar />}
+                {chat.message !== 'loading' && (
+                  <Bubble bot={chat.bot}>
+                    <Message bot={chat.bot}>{chat.message}</Message>
+                    <TimeStamp>{moment(chat.createdAt).format('hh:mm')}</TimeStamp>
+                  </Bubble>
+                )}
+                {chat.message === 'loading' && (
+                  <Bubble bot={chat.bot}>
+                    <LoadingDots>...</LoadingDots>
+                    <TimeStamp>Munda is typing..</TimeStamp>
+                  </Bubble>
+                )}
+              </Group>
+            );
+          }}
+        />
+        <ChatBox />
+      </Container>
     );
   }
 }
-const WrappedChatBox = connect(
-  null,
-  dispatch => ({
-    addChatMessage: message => dispatch(addChatMessageAction(message)),
-  }),
-)(ChatBox);
-
-const ChatScreen = ({ chats, isFetching, fetchChats, addChatMessage }) => (
-  <Container>
-    {isFetching && <ActivityIndicator />}
-    <ChatList
-      data={chats}
-      keyExtractor={chat => chat.id}
-      renderItem={({ item }) => {
-        const chat = item;
-        return (
-          <Group bot={chat.bot}>
-            {chat.bot && <Avatar />}
-            {chat.message !== 'loading' && (
-              <Bubble bot={chat.bot}>
-                <Message bot={chat.bot}>{chat.message}</Message>
-                <TimeStamp>{moment(chat.createdAt).format('hh:mm')}</TimeStamp>
-              </Bubble>
-            )}
-            {chat.message === 'loading' && (
-              <Bubble bot={chat.bot}>
-                <LoadingDots>...</LoadingDots>
-                <TimeStamp>Munda is typing..</TimeStamp>
-              </Bubble>
-            )}
-          </Group>
-        );
-      }}
-    />
-    <WrappedChatBox />
-  </Container>
-);
-
 const mapStateToProps = state => ({
   chats: state.chat.data,
   isFetching: state.chat.isFetching,
