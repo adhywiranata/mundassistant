@@ -7,7 +7,7 @@ export const Container = glamorous.view({
   flex: 1,
 });
 
-export const ChatList = glamorous.scrollView({
+export const ChatList = glamorous.flatList({
 
 });
 
@@ -38,14 +38,16 @@ export const Bubble = glamorous.view({
   margin: 5,
   marginBottom: 0,
   padding: 20,
-  paddingTop: 10,
+  paddingTop: 5,
   paddingBottom: 10,
-  borderRadius: 5,
+  borderRadius: 20,
   elevation: 1,
 }, ({ bot }) => ({
-  backgroundColor: bot ? colors.red : colors.darkGray,
+  backgroundColor: bot ? colors.darkGray : colors.red,
   alignItems: bot ? 'flex-start' : 'flex-end',
   maxWidth: bot ? '85%' : '100%',
+  borderBottomLeftRadius: bot ? 0 : 20,
+  borderBottomRightRadius: bot ? 20 : 0,
 }));
 
 export const Message = glamorous.text({
@@ -55,6 +57,13 @@ export const Message = glamorous.text({
 }, ({ bot }) => ({
   textAlign: bot ? 'left' : 'right',
 }));
+
+export const LoadingDots = glamorous.text({
+  color: colors.white,
+  fontSize: 60,
+  alignSelf: 'center',
+  marginTop: -30,
+});
 
 export const ActionBar = glamorous.view({
   backgroundColor: colors.white,

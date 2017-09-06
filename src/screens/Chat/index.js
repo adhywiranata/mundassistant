@@ -19,6 +19,7 @@ import {
   Avatar,
   Bubble,
   Message,
+  LoadingDots,
 } from './styles';
 import { colors } from '../../config/themeConstants';
 
@@ -91,18 +92,31 @@ const WrappedChatBox = connect(
 
 const ChatScreen = ({ chats, isFetching, fetchChats, addChatMessage }) => (
   <Container>
-    <ChatList>
-      {isFetching && <ActivityIndicator />}
-      {!isFetching && chats.map(chat => (
-        <Group key={chat.id} bot={chat.bot}>
-          {chat.bot && <Avatar />}
-          <Bubble bot={chat.bot}>
-            <Message bot={chat.bot}>{chat.message}</Message>
-            <TimeStamp>{moment(chat.createdAt).format('hh:mm')}</TimeStamp>
-          </Bubble>
-        </Group>
-      ))}
-    </ChatList>
+    {isFetching && <ActivityIndicator />}
+    <ChatList
+      data={chats}
+      keyExtractor={chat => chat.id}
+      renderItem={({ item }) => {
+        const chat = item;
+        return (
+          <Group bot={chat.bot}>
+            {chat.bot && <Avatar />}
+            {chat.message !== 'loading' && (
+              <Bubble bot={chat.bot}>
+                <Message bot={chat.bot}>{chat.message}</Message>
+                <TimeStamp>{moment(chat.createdAt).format('hh:mm')}</TimeStamp>
+              </Bubble>
+            )}
+            {chat.message === 'loading' && (
+              <Bubble bot={chat.bot}>
+                <LoadingDots>...</LoadingDots>
+                <TimeStamp>Munda is typing..</TimeStamp>
+              </Bubble>
+            )}
+          </Group>
+        );
+      }}
+    />
     <WrappedChatBox />
   </Container>
 );
@@ -131,7 +145,6 @@ const EnhancedChatScreen = compose(
       Realm.open({ schema: [chatSchema] })
         .then((realm) => {
           realm.write(() => {
-            // realm.delete(realm.objects('Chat'));
             // realm.create('Chat', {
             // id: 1, bot: true, message: 'hello can I help you?', createdAt: new Date() });
             //   realm.create('Chat', {
@@ -149,6 +162,14 @@ const EnhancedChatScreen = compose(
           };
 
           this.props.addChatMessage(message);
+
+          const message2 = {
+            bot: true,
+            message: 'loading',
+            createdAt: date.toISOString(),
+          };
+
+          this.props.addChatMessage(message2);
         });
     },
   }),
