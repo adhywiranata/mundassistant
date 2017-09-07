@@ -10,7 +10,6 @@ import MessageBubble from './Message';
 // styling and components
 import {
   Container,
-  Message,
 } from './styles';
 import { colors } from '../../config/themeConstants';
 

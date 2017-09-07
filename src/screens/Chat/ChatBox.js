@@ -56,7 +56,7 @@ class ChatBox extends React.Component {
             value={this.state.chatMessage}
           />
         </InputWrapper>
-        <SendMessageButton onPress={this.handleSubmit}>
+        <SendMessageButton onPress={this.handleSubmit} activeOpacity={0.8}>
           <ButtonLabel>SEND</ButtonLabel>
         </SendMessageButton>
       </ActionBar>
