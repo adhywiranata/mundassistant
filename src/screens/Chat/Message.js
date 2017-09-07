@@ -12,24 +12,22 @@ import {
   LoadingDots,
 } from './styles';
 
-const MessageComponent = ({ chat }) => {
-  return (
-    <Group bot={chat.bot}>
-      {chat.bot && <Avatar />}
-      {chat.message !== 'loading' && (
-        <Bubble bot={chat.bot}>
-          <Message bot={chat.bot}>{chat.message}</Message>
-          <TimeStamp>{moment(chat.createdAt).format('hh:mm')}</TimeStamp>
-        </Bubble>
-      )}
-      {chat.message === 'loading' && (
-        <Bubble bot={chat.bot}>
-          <LoadingDots>...</LoadingDots>
-          <TimeStamp>Munda is typing..</TimeStamp>
-        </Bubble>
-      )}
-    </Group>
-  );
-};
+const MessageComponent = ({ chat }) => (
+  <Group bot={chat.bot}>
+    {chat.bot && <Avatar />}
+    {chat.message !== 'loading' && (
+      <Bubble bot={chat.bot}>
+        <Message bot={chat.bot}>{chat.message}</Message>
+        <TimeStamp>{moment(chat.createdAt).format('hh:mm')}</TimeStamp>
+      </Bubble>
+    )}
+    {chat.message === 'loading' && (
+      <Bubble bot={chat.bot}>
+        <LoadingDots>...</LoadingDots>
+        <TimeStamp>Munda is typing..</TimeStamp>
+      </Bubble>
+    )}
+  </Group>
+);
 
 export default onlyUpdateForKeys(['chat'])(MessageComponent);
