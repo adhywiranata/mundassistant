@@ -1,11 +1,12 @@
 import React from 'react';
-import { ActivityIndicator, FlatList, Keyboard } from 'react-native';
+import { ActivityIndicator, FlatList, Keyboard, View } from 'react-native';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import Realm from 'realm';
 
 import ChatBox from './ChatBox';
 import MessageBubble from './Message';
+import QuickReply from './QuickReply';
 
 // styling and components
 import {
@@ -55,7 +56,9 @@ class ChatScreen extends React.Component {
           ref={(flatList) => { this.chatList = flatList; }}
           keyExtractor={chat => chat.id}
           renderItem={({ item }) => <MessageBubble chat={item} />}
+          ListHeaderComponent={() => <View style={{ height: 70 }} />}
         />
+        <QuickReply />
         <ChatBox scrollToBottom={this.scrollToBottom} />
       </Container>
     );

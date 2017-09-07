@@ -85,14 +85,45 @@ export const MessageInput = glamorous.textInput({
 });
 
 export const SendMessageButton = glamorous.touchableOpacity({
-  backgroundColor: colors.red,
   height: '100%',
   width: 45,
   justifyContent: 'center',
   alignItems: 'center',
-});
+}, ({ sendDisabled }) => ({
+  backgroundColor: sendDisabled ? colors.darkGray : colors.red,
+}));
 
 export const ButtonLabel = glamorous.text({
   color: colors.white,
   fontWeight: 'bold',
+});
+
+export const QuickReplySection = glamorous.view({
+  width: '100%',
+  height: 60,
+  backgroundColor: 'rgba(0,0,0, 0.6)',
+  position: 'absolute',
+  bottom: 45,
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+export const QuickReplyBubble = glamorous.touchableOpacity({
+  margin: 10,
+  marginLeft: 5,
+  marginRight: 5,
+  padding: 10,
+  paddingLeft: 15,
+  paddingRight: 15,
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderWidth: 1,
+  borderColor: colors.white,
+  borderRadius: 30,
+  borderBottomRightRadius: 10,
+});
+
+export const QuickReplyMessage = glamorous.text({
+  color: colors.white,
+  ...fontWeightScale.bold,
 });

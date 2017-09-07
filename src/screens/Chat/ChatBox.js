@@ -20,6 +20,7 @@ class ChatBox extends React.Component {
     super();
     this.state = {
       chatMessage: '',
+      sendDisabled: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,7 +28,10 @@ class ChatBox extends React.Component {
   }
 
   handleChange(chatMessage) {
-    this.setState({ chatMessage });
+    this.setState({
+      chatMessage,
+      sendDisabled: chatMessage === '',
+    });
   }
 
   handleSubmit() {
@@ -38,12 +42,13 @@ class ChatBox extends React.Component {
       createdAt: date.toISOString(),
     };
 
-    this.setState({ chatMessage: '' });
+    this.setState({ chatMessage: '', sendDisabled: true });
     this.props.addChatMessage(message);
     this.props.scrollToBottom();
   }
 
   render() {
+    const { chatMessage, sendDisabled } = this.state;
     return (
       <ActionBar>
         <InputWrapper>
@@ -53,10 +58,15 @@ class ChatBox extends React.Component {
             selectionColor={'#666666'}
             onChangeText={this.handleChange}
             onSubmitEditing={this.handleSubmit}
-            value={this.state.chatMessage}
+            value={chatMessage}
           />
         </InputWrapper>
-        <SendMessageButton onPress={this.handleSubmit} activeOpacity={0.8}>
+        <SendMessageButton
+          onPress={this.handleSubmit}
+          activeOpacity={0.8}
+          disabled={sendDisabled}
+          sendDisabled={sendDisabled}
+        >
           <ButtonLabel>SEND</ButtonLabel>
         </SendMessageButton>
       </ActionBar>
