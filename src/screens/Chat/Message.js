@@ -1,4 +1,5 @@
 import React from 'react';
+import { onlyUpdateForKeys } from 'recompose';
 import moment from 'moment';
 
 // styling and components
@@ -11,7 +12,7 @@ import {
   LoadingDots,
 } from './styles';
 
-export default ({ chat }) => {
+const MessageComponent = ({ chat }) => {
   return (
     <Group bot={chat.bot}>
       {chat.bot && <Avatar />}
@@ -30,3 +31,5 @@ export default ({ chat }) => {
     </Group>
   );
 };
+
+export default onlyUpdateForKeys(['chat'])(MessageComponent);
