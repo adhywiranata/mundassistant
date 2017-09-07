@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import Realm from 'realm';
@@ -37,23 +37,28 @@ class ChatScreen extends React.Component {
   constructor() {
     super();
     this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.scrollToBottom);
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidHide', this.scrollToBottom);
   }
 
   scrollToBottom() {
-    // this.chatList.scrollToOffset(index => ({ offset: index * 100 }));
-    this.chatList.scrollToEnd();
+    if (this.props.chats.length > 0) {
+      this.chatList.scrollToIndex({ index: 0 });
+    }
   }
 
   render() {
     const { chats, isFetching, fetchChats, addChatMessage } = this.props;
+    const chatsData = [...chats].reverse();
     return (
-      <Container>
+      <Container onLayout={this.scrollToBottom}>
         {isFetching && <ActivityIndicator />}
         <FlatList
-          data={chats}
+          data={chatsData}
           getItemLayout={(data, index) => (
             { length: 30, offset: 30 * index, index }
           )}
+          inverted
           ref={(flatList) => { this.chatList = flatList; }}
           keyExtractor={chat => chat.id}
           renderItem={({ item }) => {
@@ -131,6 +136,16 @@ const EnhancedChatScreen = compose(
           };
 
           this.props.addChatMessage(message2);
+
+          for (let i = 0; i < 10; i += 1) {
+            const mes = {
+              bot: false,
+              message: 'can you help meh',
+              createdAt: date.toISOString(),
+            };
+
+            this.props.addChatMessage(mes);
+          }
         });
     },
   }),
