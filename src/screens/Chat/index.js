@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import Realm from 'realm';
@@ -34,14 +34,27 @@ import { chatSchema } from '../../realmSchemas';
 const parseRealmObject = realmObj => JSON.parse(JSON.stringify(realmObj));
 
 class ChatScreen extends React.Component {
+  constructor() {
+    super();
+    this.scrollToBottom = this.scrollToBottom.bind(this);
+  }
+
+  scrollToBottom() {
+    // this.chatList.scrollToOffset(index => ({ offset: index * 100 }));
+    this.chatList.scrollToEnd();
+  }
+
   render() {
     const { chats, isFetching, fetchChats, addChatMessage } = this.props;
     return (
       <Container>
         {isFetching && <ActivityIndicator />}
-        <ChatList
+        <FlatList
           data={chats}
-          ref={(chatlist) => { this.chatList = chatlist; }}
+          getItemLayout={(data, index) => (
+            { length: 30, offset: 30 * index, index }
+          )}
+          ref={(flatList) => { this.chatList = flatList; }}
           keyExtractor={chat => chat.id}
           renderItem={({ item }) => {
             const chat = item;
@@ -64,7 +77,7 @@ class ChatScreen extends React.Component {
             );
           }}
         />
-        <ChatBox />
+        <ChatBox scrollToBottom={this.scrollToBottom} />
       </Container>
     );
   }

@@ -40,6 +40,7 @@ class ChatBox extends React.Component {
 
     this.setState({ chatMessage: '' });
     this.props.addChatMessage(message);
+    this.props.scrollToBottom();
   }
 
   render() {
