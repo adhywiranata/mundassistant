@@ -3,20 +3,14 @@ import { ActivityIndicator, FlatList, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import Realm from 'realm';
-import moment from 'moment';
 
 import ChatBox from './ChatBox';
+import MessageBubble from './Message';
 
 // styling and components
 import {
   Container,
-  ChatList,
-  Group,
-  TimeStamp,
-  Avatar,
-  Bubble,
   Message,
-  LoadingDots,
 } from './styles';
 import { colors } from '../../config/themeConstants';
 
@@ -61,26 +55,7 @@ class ChatScreen extends React.Component {
           inverted
           ref={(flatList) => { this.chatList = flatList; }}
           keyExtractor={chat => chat.id}
-          renderItem={({ item }) => {
-            const chat = item;
-            return (
-              <Group bot={chat.bot}>
-                {chat.bot && <Avatar />}
-                {chat.message !== 'loading' && (
-                  <Bubble bot={chat.bot}>
-                    <Message bot={chat.bot}>{chat.message}</Message>
-                    <TimeStamp>{moment(chat.createdAt).format('hh:mm')}</TimeStamp>
-                  </Bubble>
-                )}
-                {chat.message === 'loading' && (
-                  <Bubble bot={chat.bot}>
-                    <LoadingDots>...</LoadingDots>
-                    <TimeStamp>Munda is typing..</TimeStamp>
-                  </Bubble>
-                )}
-              </Group>
-            );
-          }}
+          renderItem={({ item }) => <MessageBubble chat={item} />}
         />
         <ChatBox scrollToBottom={this.scrollToBottom} />
       </Container>
