@@ -28,7 +28,8 @@ const fetchChatFailure = (state, error) => {
 const addChatMessage = (state, message) => {
   const id = state.data.length < 1 ? 1 : state.data[state.data.length - 1].id + 1;
   const newMessage = { ...message, id };
-  return Immutable.set(state, 'data', state.data.concat(newMessage));
+  const newData = state.data.concat(newMessage);
+  return Immutable.set(state, 'data', newData);
 };
 
 export default (state = initialState, { type, payload }) => {

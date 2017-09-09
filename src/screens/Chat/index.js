@@ -64,6 +64,7 @@ class ChatScreen extends React.Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
   chats: state.chat.data,
   isFetching: state.chat.isFetching,
@@ -77,59 +78,61 @@ const mapDispatchToProps = dispatch => ({
   addChatMessage: message => dispatch(addChatMessageAction(message)),
 });
 
+const componentLifeCycles = {
+  componentDidMount() {
+    this.props.fetchChatsLoading();
+    Realm.open({ schema: [chatSchema] })
+      .then((realm) => {
+        realm.write(() => {
+          // realm.create('Chat', {
+          // id: 1, bot: true, message: 'hello can I help you?', createdAt: new Date() });
+          //   realm.create('Chat', {
+          // id: 2, bot: false, message: 'can i set a new command?', createdAt: new Date() });
+        });
+        const chats = parseRealmObject(realm.objects('Chat'));
+        const chatsArr = Object.keys(chats).map(each => chats[each]);
+        this.props.fetchChatsSuccess(chatsArr);
+
+        const date = new Date();
+        const message = {
+          bot: true,
+          message: 'Hello! How can I help you to be more productive? ',
+          createdAt: date.toISOString(),
+        };
+
+        this.props.addChatMessage(message);
+
+        const message2 = {
+          bot: true,
+          message: 'loading',
+          createdAt: date.toISOString(),
+        };
+
+        this.props.addChatMessage(message2);
+
+        for (let i = 0; i < 1; i += 1) {
+          const mes = {
+            bot: false,
+            message: 'can you help meh',
+            createdAt: date.toISOString(),
+          };
+
+          this.props.addChatMessage(mes);
+        }
+      });
+  },
+};
+
 const EnhancedChatScreen = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  lifecycle({
-    componentDidMount() {
-      this.props.fetchChatsLoading();
-      Realm.open({ schema: [chatSchema] })
-        .then((realm) => {
-          realm.write(() => {
-            // realm.create('Chat', {
-            // id: 1, bot: true, message: 'hello can I help you?', createdAt: new Date() });
-            //   realm.create('Chat', {
-            // id: 2, bot: false, message: 'can i set a new command?', createdAt: new Date() });
-          });
-          const chats = parseRealmObject(realm.objects('Chat'));
-          const chatsArr = Object.keys(chats).map(each => chats[each]);
-          this.props.fetchChatsSuccess(chatsArr);
-
-          const date = new Date();
-          const message = {
-            bot: true,
-            message: 'Hello! How can I help you to be more productive? ',
-            createdAt: date.toISOString(),
-          };
-
-          this.props.addChatMessage(message);
-
-          const message2 = {
-            bot: true,
-            message: 'loading',
-            createdAt: date.toISOString(),
-          };
-
-          this.props.addChatMessage(message2);
-
-          for (let i = 0; i < 10; i += 1) {
-            const mes = {
-              bot: false,
-              message: 'can you help meh',
-              createdAt: date.toISOString(),
-            };
-
-            this.props.addChatMessage(mes);
-          }
-        });
-    },
-  }),
+  lifecycle(componentLifeCycles),
 )(ChatScreen);
 
 EnhancedChatScreen.navigationOptions = {
-  title: 'WHAT DO YOU NEED? :)',
+  title: 'MUNDA',
   headerStyle: {
     backgroundColor: colors.red,
   },
