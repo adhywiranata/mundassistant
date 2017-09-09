@@ -1,10 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-// data
-import {
-  addChatMessage as addChatMessageAction,
-} from '../../actions/chatActionCreator';
 
 // styling and components
 import {
@@ -16,8 +10,8 @@ import {
 } from './styles';
 
 class ChatBox extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       chatMessage: '',
       sendDisabled: true,
@@ -74,9 +68,4 @@ class ChatBox extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  dispatch => ({
-    addChatMessage: message => dispatch(addChatMessageAction(message)),
-  }),
-)(ChatBox);
+export default ChatBox;

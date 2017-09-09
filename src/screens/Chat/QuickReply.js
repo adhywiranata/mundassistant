@@ -11,14 +11,21 @@ const replies = [
   { id: 5, message: 'show my calendar' },
   { id: 6, message: 'remind me something' },
 ];
-export default () => (
+export default ({ addChatMessage }) => (
   <QuickReplySection>
     <FlatList
       data={replies}
       keyExtractor={reply => reply.id}
       horizontal
       renderItem={({ item }) => (
-        <QuickReplyBubble activeOpacity={0.5}>
+        <QuickReplyBubble
+          activeOpacity={0.5}
+          onPress={() => addChatMessage({
+            bot: false,
+            message: item.message,
+            createdAt: (new Date()).toISOString(),
+          })}
+        >
           <QuickReplyMessage>{ item.message }</QuickReplyMessage>
         </QuickReplyBubble>
       )}

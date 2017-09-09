@@ -42,7 +42,7 @@ class ChatScreen extends React.Component {
   }
 
   render() {
-    const { chats, isFetching, fetchChats, addChatMessage } = this.props;
+    const { chats, isFetching, addChatMessage } = this.props;
     const chatsData = [...chats].reverse();
     return (
       <Container onLayout={this.scrollToBottom}>
@@ -58,8 +58,8 @@ class ChatScreen extends React.Component {
           renderItem={({ item }) => <MessageBubble chat={item} />}
           ListHeaderComponent={() => <View style={{ height: 70 }} />}
         />
-        <QuickReply />
-        <ChatBox scrollToBottom={this.scrollToBottom} />
+        <QuickReply addChatMessage={addChatMessage} />
+        <ChatBox scrollToBottom={this.scrollToBottom} addChatMessage={addChatMessage} />
       </Container>
     );
   }
