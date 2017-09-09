@@ -4,6 +4,7 @@ import {
   FETCH_CHATS_SUCCESS,
   FETCH_CHATS_FAILURE,
   ADD_CHAT_MESSAGE,
+  ADD_CHAT_MESSAGE_SUCCESS,
 } from './constants';
 
 export const fetchChats = () => ({
@@ -26,5 +27,10 @@ export const fetchChatsFailure = error => ({
 
 export const addChatMessage = message => ({
   type: ADD_CHAT_MESSAGE,
+  payload: message,
+});
+
+export const addChatMessageSuccess = message => ({
+  type: ADD_CHAT_MESSAGE_SUCCESS,
   payload: message,
 });

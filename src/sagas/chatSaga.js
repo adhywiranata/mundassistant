@@ -17,10 +17,20 @@ export function* watchFetchChats() {
   yield takeEvery(ActionTypes.FETCH_CHATS, fetchChats);
 }
 
-function* addChatMessage() {
+function* addChatMessage({ payload }) {
   yield put({ type: ActionTypes.ADD_CHAT_MESSAGE_LOADING });
   try {
-    yield put({ type: ActionTypes.ADD_CHAT_MESSAGE_SUCCESS });
+    yield put({ type: ActionTypes.ADD_CHAT_MESSAGE_SUCCESS, payload });
+
+    if (!payload.bot) { // if message is not from bot
+      const botLoadingTemplate = {
+        bot: true,
+        message: 'loading',
+        createdAt: (new Date()).toISOString(),
+      };
+
+      yield put({ type: ActionTypes.ADD_CHAT_MESSAGE_SUCCESS, payload: botLoadingTemplate });
+    }
   } catch (error) {
     yield put({ type: ActionTypes.ADD_CHAT_MESSAGE_FAILURE });
   }

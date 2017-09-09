@@ -102,14 +102,6 @@ const componentLifeCycles = {
 
         this.props.addChatMessage(message);
 
-        const message2 = {
-          bot: true,
-          message: 'loading',
-          createdAt: date.toISOString(),
-        };
-
-        this.props.addChatMessage(message2);
-
         for (let i = 0; i < 1; i += 1) {
           const mes = {
             bot: false,

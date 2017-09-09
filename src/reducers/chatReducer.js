@@ -4,7 +4,7 @@ import {
   FETCH_CHATS_LOADING,
   FETCH_CHATS_SUCCESS,
   FETCH_CHATS_FAILURE,
-  ADD_CHAT_MESSAGE,
+  ADD_CHAT_MESSAGE_SUCCESS,
 } from '../actions/constants';
 
 const initialState = Immutable({
@@ -37,7 +37,7 @@ export default (state = initialState, { type, payload }) => {
     case FETCH_CHATS_LOADING: return Immutable.set(state, 'isFetching', true);
     case FETCH_CHATS_SUCCESS: return fetchChatSuccess(state, payload);
     case FETCH_CHATS_FAILURE: return fetchChatFailure(state, payload);
-    case ADD_CHAT_MESSAGE: return addChatMessage(state, payload);
+    case ADD_CHAT_MESSAGE_SUCCESS: return addChatMessage(state, payload);
     default: return state;
   }
 };
