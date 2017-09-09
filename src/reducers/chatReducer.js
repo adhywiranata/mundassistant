@@ -5,6 +5,7 @@ import {
   FETCH_CHATS_SUCCESS,
   FETCH_CHATS_FAILURE,
   ADD_CHAT_MESSAGE_SUCCESS,
+  ADD_BOT_CHAT_REPLY_LOADING,
 } from '../actions/constants';
 
 const initialState = Immutable({
@@ -32,12 +33,25 @@ const addChatMessage = (state, message) => {
   return Immutable.set(state, 'data', newData);
 };
 
+const addBotChatLoadingMessage = (state) => {
+  const id = state.data.length < 1 ? 1 : state.data[state.data.length - 1].id + 1;
+  const newMessage = {
+    id,
+    bot: true,
+    message: 'loading',
+    createdAt: (new Date()).toISOString(),
+  };
+  const newData = state.data.concat(newMessage);
+  return Immutable.set(state, 'data', newData);
+};
+
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case FETCH_CHATS_LOADING: return Immutable.set(state, 'isFetching', true);
     case FETCH_CHATS_SUCCESS: return fetchChatSuccess(state, payload);
     case FETCH_CHATS_FAILURE: return fetchChatFailure(state, payload);
     case ADD_CHAT_MESSAGE_SUCCESS: return addChatMessage(state, payload);
+    case ADD_BOT_CHAT_REPLY_LOADING: return addBotChatLoadingMessage(state, payload);
     default: return state;
   }
 };
